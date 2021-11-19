@@ -4,7 +4,7 @@
 # Script Name:   exec.sh 
 # Description:   Script de execução
 # Site:          https://site.fusiondms.com.br/
-# Written by:    Vanderson Diniz
+# Written by:    vanderson.lima
 # Maintenance:   FusionDMS
 # ---------------------------------------------------------------- #
 # Usage:         
@@ -16,7 +16,9 @@
 
 #------INCLUDES--------->
 source ./script.sh
+source ./welcome.sh
+source ./constants.sh
 #----------------------->
 
+#wellCome - Tela de boas-vindas com as maneiras de execução
 
-funcao
