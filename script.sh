@@ -25,4 +25,3 @@ function funcao() {
     echo "HelloWorld!"
 }
 #-------------------------->
-
