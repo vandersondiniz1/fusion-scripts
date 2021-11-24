@@ -13,7 +13,7 @@
 # -----------------------------------------------------------------#
 # History:
 # -> 19.11.2021 - vanderson.lima - criação do script
-#
+# -> 24.11.2021 - vanderson.lima - configuracao/criacao de alias
 # -----------------------------------------------------------------#
 
 #------FUNCTIONS----------->
@@ -24,8 +24,9 @@ function wellCome(){
     echo " / __/ / /_/ (__  ) / /_/ / / / / /_/ / /  / /___/ / "
     echo "/_/    \__,_/____/_/\____/_/ /_/_____/_/  /_//____/  "
     echo "                                                     "
-    echo 'chmod +x nome_do_arquivo'
-    echo 'sh [command 1] [command 2] [...]'
+    echo 'commands'
+    echo 'comando 1'
+    echo 'comando 2'
 }
 #-------------------------->
 
