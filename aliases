@@ -1,5 +1,0 @@
-alias clone='git clone'
-alias checkout='git checkout'
-alias feature-m='git checkout -b feature/ENG-M-I'
-alias feature-b='git checkout -b feature/ENG-B-I'
-alias push='git push origin'
