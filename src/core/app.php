@@ -1,33 +1,25 @@
 <?php
 
 require_once(__DIR__ . '\..\utils\Utils.php');
+require_once(__DIR__ . '\Bug.php');
 
-$msg = true;
-$path = ("C:\\Users\\Fusion\\Desktop\\Fusion\\Projetos\\bitbucket\\fusionweb");
-$get_release = "git branch -a --sort=-committerdate | grep release | sed -n '1 p'";
+// wellCome();
 
-logMsg('->Executing application ', 'info', 'api-server.php');
-logMsg("->cd 'C:\\Users\\Fusion\\Desktop\\Fusion\\Projetos\\bitbucket\\fusionweb' ", 'info', 'api-server.php');
+logMsg('->Executing application ', 'info', 'app.php');
 
-#ir no seu repositório local e executar um git fetch, pra atualizar as branchs
-#FIXME: precisamos definir qual sera a branch principal. Existe master, develop, prod2.5
-#acho que precisamos passar o nome da branch por parametro
-exec("cd $path && git checkout master");
-logMsg('->git checkout master', 'info', 'api-server.php');
+for ($i = 0; $i < $argc; $i++) {
+    if (strtolower($argv[$i]) == 'bug') {
+        $bug = true;
+        if (!empty($argv[2])) {
+            $eng_id = $argv[2];
+            echo ('Eng number ' . $eng_id);
+        } else {
+            echo ('The eng number cannot be null');
+            return false;
+        }
+    }
+}
 
-exec("cd $path && git pull origin master && git fetch --all");
-logMsg('->git pull origin master && git fetch --all', 'info', 'api-server.php');
-
-exec("cd $path && git branch -a --sort=-committerdate | grep release | sed -n '1 p'", $output);
-$last_release = explode('remotes/origin/', $output[0]);
-logMsg("->git branch -a --sort=-committerdate | grep release | sed -n '1 p'", 'info', 'api-server.php');
-logMsg("->Last Release:$last_release[0] ", 'info', 'api-server.php');
-
-exec("cd $path && git checkout $last_release[0]");
-logMsg("->git checkout $last_release[0]", 'info', 'api-server.php');
-
-// exec("cd $path && git checkout -b Feature/ENG-M-I");
-// exec("cd $path && git checkout -b Feature/ENG-B-I");
-// exec("cd $path && git checkout -b Feature/ENG-H-I");
-
-logMsg('->Ending application ', 'info', 'api-server.php');
+if ($bug) {
+    var_dump($argv);
+}

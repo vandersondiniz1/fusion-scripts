@@ -1,8 +1,0 @@
-[2021-11-29 19:54:05] [sys] [INFO] [api-server.php] []: ->Executing application 
-[2021-11-29 19:54:05] [sys] [INFO] [api-server.php] []: ->cd 'C:\Users\Fusion\Desktop\Fusion\Projetos\bitbucket\fusionweb' 
-[2021-11-29 19:54:06] [sys] [INFO] [api-server.php] []: ->git checkout master
-[2021-11-29 19:54:15] [sys] [INFO] [api-server.php] []: ->git pull origin master && git fetch --all
-[2021-11-29 19:54:16] [sys] [INFO] [api-server.php] []: ->git branch -a --sort=-committerdate | grep release | sed -n '1 p'
-[2021-11-29 19:54:16] [sys] [INFO] [api-server.php] []: ->Last Release:  release/v2.54.0 
-[2021-11-29 19:54:17] [sys] [INFO] [api-server.php] []: ->git checkout   release/v2.54.0
-[2021-11-29 19:54:17] [sys] [INFO] [api-server.php] []: ->Ending application 
