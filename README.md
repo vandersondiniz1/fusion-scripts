@@ -25,7 +25,9 @@ Projeto para criação de branches padronizadas
 >Php   - versão 7.4
 
 >## Configuração
->Php   - versão 7.4
+>- Copiar a estrutura de diretórios para o lugar que achar adequado;
+>- Ter um repositório git já clonado;
+>- Criar um arquivo .env na raiz do projeto e configurar o Path direcionado para a raiz do repositório.
 
 >## Execução
 >php /src/core/app.php parâmetro número-da-eng nome-da-branch
