@@ -9,7 +9,6 @@ date_default_timezone_set('America/Sao_Paulo');
 
 $msg = true;
 $bug = false;
-$path = ("C:\\Users\\Fusion\\Desktop\\Fusion\\Projetos\\bitbucket\\fusionweb");
 $hotfix = false;
 $melhoria = false;
 $branch = null;
@@ -23,7 +22,7 @@ for ($i = 1; $i < $argc; $i++) {
     if (strtolower($argv[$i]) == 'bug') {
         $bug = true;
         if (!empty($argv[2])) {
-            $eng_id = $argv[2];
+            $eng_id = preg_replace("/[^0-9]/", "", $argv[2]);
             if (!empty($argv[3])) {
                 $branch = $argv[3];
             } else {
@@ -45,7 +44,7 @@ for ($i = 1; $i < $argc; $i++) {
     if (strtolower($argv[$i]) == 'hotfix') {
         $hotfix = true;
         if (!empty($argv[2])) {
-            $eng_id = $argv[2];
+            $eng_id = preg_replace("/[^0-9]/", "", $argv[2]);
             if (!empty($argv[3])) {
                 $branch = $argv[3];
             } else {
@@ -65,7 +64,7 @@ for ($i = 1; $i < $argc; $i++) {
     if (strtolower($argv[$i]) == 'melhoria') {
         $melhoria = true;
         if (!empty($argv[2])) {
-            $eng_id = $argv[2];
+            $eng_id = preg_replace("/[^0-9]/", "", $argv[2]);
             if (!empty($argv[3])) {
                 $branch = $argv[3];
             } else {
@@ -82,7 +81,7 @@ for ($i = 1; $i < $argc; $i++) {
 }
 
 if ($bug) {
-    $ret = $eng_bug->engBug($branch, $eng_id, $path);
+    $ret = $eng_bug->engBug($branch, $eng_id);
     if ($ret) {
         echo ('->Actual branch: ' . $ret . "\n");
         logMsg("->Actual branch:$ret", 'info', 'app.php', '-');
@@ -91,7 +90,7 @@ if ($bug) {
 }
 
 if ($hotfix) {
-    $ret = $eng_hotfix->engHotfix($branch, $eng_id, $path);
+    $ret = $eng_hotfix->engHotfix($branch, $eng_id);
     if ($ret) {
         echo ('->Actual branch: ' . $ret . "\n");
         logMsg("->Actual branch:$ret", 'info', 'app.php', '-');
@@ -100,7 +99,7 @@ if ($hotfix) {
 }
 
 if ($melhoria) {
-    $ret = $eng_melhoria->engMelhoria($branch, $eng_id, $path);
+    $ret = $eng_melhoria->engMelhoria($branch, $eng_id);
     if ($ret) {
         echo ('->Actual branch: ' . $ret . "\n");
         logMsg("->Actual branch:$ret", 'info', 'app.php', '-');

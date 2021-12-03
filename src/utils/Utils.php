@@ -81,16 +81,21 @@ function wellCome()
     global $msg;
     if ($msg) {
 
+        echo "\n";
+        echo '========================================================' . chr(10) . chr(13);
         echo "    ______           _             ____  __  ________" . chr(10) . chr(13);
         echo "   / ____/_  _______(_)___  ____  / __ \/  |/  / ___/" . chr(10) . chr(13);
         echo "  / /_  / / / / ___/ / __ \/ __ \/ / / / /|_/ /\__ \ " . chr(10) . chr(13);
         echo " / __/ / /_/ (__  ) / /_/ / / / / /_/ / /  / /___/ / " . chr(10) . chr(13);
         echo "/_/    \__,_/____/_/\____/_/ /_/_____/_/  /_//____/  " . chr(10) . chr(13);
         echo "                                                     " . chr(10) . chr(13);
-        echo 'By vandersondiniz' . chr(10) . chr(13);
-        echo 'app.php [command 1] [command 2] [...]' . chr(10) . chr(13);
-        echo 'Commandos:' . chr(10) . chr(13);
-        echo '  --comando     descricao do comando' . chr(10) . chr(13);
+        echo '========================================================' . chr(10) . chr(13);
+        echo 'Execução' . chr(10) . chr(13);
+        echo 'php app.php [parâmetro] [número da eng] [nome da branch]' . chr(10) . chr(13);
+        echo 'php app.php bug 666 master' . chr(10) . chr(13);
+        echo 'php app.php hotfix 666 develop' . chr(10) . chr(13);
+        echo 'php app.php melhoria 666 staging' . chr(10) . chr(13);
+        echo '========================================================' . chr(10) . chr(13);
         echo "\n";
     }
 }
