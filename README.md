@@ -13,10 +13,9 @@ Projeto para criação de branches padronizadas
 
 * [Informações Gerais](#informações-gerais)
 * [Requisitos](#requisitos)
-* [Estrutura de Diretórios](#estrutura-de-diretorios)
-* [Instalação](#setup)
 * [Configuração](#configuração)
 * [Execução](#execução)
+* [Estrutura de Diretórios](#estrutura-de-diretórios)
 * [Variáveis de Ambiente](#variaveis-de-ambiente)
 
 >## Informações Gerais
