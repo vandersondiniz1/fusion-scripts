@@ -16,7 +16,7 @@ Projeto para criação de branches padronizadas
 * [Configuração](#configuração)
 * [Execução](#execução)
 * [Estrutura de Diretórios](#estrutura-de-diretórios)
-* [Variáveis de Ambiente](#variaveis-de-ambiente)
+* [Variáveis de Ambiente](#variáveis-de-ambiente)
 
 >## Informações Gerais
 >Esse projeto foi desenvolvido para auxiliar os desenvolvedores da FusionDMS, na criação de branches git localmente. 
