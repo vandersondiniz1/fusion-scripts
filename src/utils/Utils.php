@@ -11,7 +11,7 @@ define('GERALOG', 5);
 function getEnvironment($envKey = null)
 {
     try {
-        $envs = parse_ini_file(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '.env'); //modificar a barra de acordo com o SO
+        $envs = parse_ini_file(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '.env');
         if (isset($envs[$envKey])) {
             $_ENV[$envKey] = $envs[$envKey];
             return $_ENV[$envKey];
@@ -59,6 +59,9 @@ function logMsg($msg, $level = 'info', $fileSource = '', $method = '', $file = '
             case 'info':
                 if (GERALOG >= 3) $log->info($logmsg);
                 break;
+            case 'debug':
+                if (GERALOG >= 4) $log->debug($logmsg);
+                break;
             case 'warning':
                 if (GERALOG >= 2) $log->warning($logmsg);
                 break;
@@ -99,3 +102,4 @@ function wellCome()
         echo "\n";
     }
 }
+

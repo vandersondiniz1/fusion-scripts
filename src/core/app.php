@@ -1,6 +1,7 @@
 <?php
 
-require_once(__DIR__ . '\..\utils\Utils.php');
+require_once(__DIR__ . '\..\utils\utils.php');
+require_once(__DIR__ . '\..\utils\console.php');
 require_once(__DIR__ . '\bug.php');
 require_once(__DIR__ . '\hotfix.php');
 require_once(__DIR__ . '\melhoria.php');
@@ -16,67 +17,80 @@ $eng_bug = new Bug();
 $eng_hotfix = new Hotfix();
 $eng_melhoria = new Melhoria();
 
+Console::log('Executing application', 'green');
 logMsg('->Executing application ', 'info', 'app.php', '-');
 
+for ($i = 0; $i < $argc; $i++) {
+    if ($argc == 1) {
+        echo Console::yellow('Its necessary to pass the required arguments', 'reverse') . "\n";
+        logMsg('->The branch name cannot be null', 'info', 'app.php', '-');
+        wellCome();
+        return false;
+    }
+}
+
 for ($i = 1; $i < $argc; $i++) {
-    if (strtolower($argv[$i]) == 'bug') {
+    if (strtolower($argv[1]) == 'bug') {
         $bug = true;
         if (!empty($argv[2])) {
             $eng_id = preg_replace("/[^0-9]/", "", $argv[2]);
             if (!empty($argv[3])) {
                 $branch = $argv[3];
             } else {
-                echo ('The branch name cannot be null');
-                logMsg('->The branch name cannot be null', 'error', 'app.php', '-');
+                echo Console::yellow('The branch name cannot be null', 'reverse') . "\n";
+                logMsg('->The branch name cannot be null', 'info', 'app.php', '-');
                 wellCome();
                 return false;
             }
         } else {
-            echo ('The eng number cannot be null');
-            logMsg('->The eng number cannot be null', 'error', 'app.php', '-');
+            echo Console::yellow('The eng number cannot be null', 'reverse') . "\n";
+            logMsg('->The eng number cannot be null', 'info', 'app.php', '-');
             wellCome();
             return false;
         }
-    }
-}
-
-for ($i = 1; $i < $argc; $i++) {
-    if (strtolower($argv[$i]) == 'hotfix') {
+    } else
+    if (strtolower($argv[1]) == 'hotfix') {
         $hotfix = true;
         if (!empty($argv[2])) {
             $eng_id = preg_replace("/[^0-9]/", "", $argv[2]);
             if (!empty($argv[3])) {
                 $branch = $argv[3];
             } else {
-                echo ('The branch name cannot be null');
+                echo Console::yellow('The branch name cannot be null', 'reverse') . "\n";
+                logMsg('->The branch name cannot be null', 'info', 'app.php', '-');
                 wellCome();
                 return false;
             }
         } else {
-            echo ('The eng number cannot be null');
+            echo Console::yellow('The eng number cannot be null', 'reverse') . "\n";
+            logMsg('->The eng number cannot be null', 'info', 'app.php', '-');
             wellCome();
             return false;
         }
-    }
-}
-
-for ($i = 1; $i < $argc; $i++) {
-    if (strtolower($argv[$i]) == 'melhoria') {
+    } else 
+    if (strtolower($argv[1]) == 'melhoria') {
         $melhoria = true;
         if (!empty($argv[2])) {
             $eng_id = preg_replace("/[^0-9]/", "", $argv[2]);
             if (!empty($argv[3])) {
                 $branch = $argv[3];
             } else {
-                echo ('The branch name cannot be null');
+                echo Console::yellow('The branch name cannot be null', 'reverse') . "\n";
+                logMsg('->The branch name cannot be null', 'info', 'app.php', '-');
                 wellCome();
                 return false;
             }
         } else {
-            echo ('The eng number cannot be null');
+            echo Console::yellow('The eng number cannot be null', 'reverse') . "\n";
+            logMsg('->The eng number cannot be null', 'info', 'app.php', '-');
             wellCome();
             return false;
         }
+    }else{
+        echo Console::yellow('Invalid parameter', 'reverse') . "\n";
+        logMsg('->Invalid parameter', 'info', 'app.php', '-');
+        wellCome();
+        return false;
     }
 }
 
@@ -85,8 +99,10 @@ if ($bug) {
     if ($ret) {
         echo ('->Actual branch: ' . $ret . "\n");
         logMsg("->Actual branch:$ret", 'info', 'app.php', '-');
-    } else
-        logMsg('->Some error occurred on the execution process. Check the logs', 'error', 'app.php', '-');
+    } else {
+        echo Console::yellow('Some info occurred on the execution process. Check the logs', 'reverse') . "\n";
+        logMsg('->Some info occurred on the execution process. Check the logs', 'info', 'app.php', '-');
+    }
 }
 
 if ($hotfix) {
@@ -94,8 +110,10 @@ if ($hotfix) {
     if ($ret) {
         echo ('->Actual branch: ' . $ret . "\n");
         logMsg("->Actual branch:$ret", 'info', 'app.php', '-');
-    } else
-        logMsg('->Some error occurred on the execution process. Check the logs', 'error', 'app.php', '-');
+    } else {
+        echo Console::yellow('Some info occurred on the execution process. Check the logs', 'reverse') . "\n";
+        logMsg('->Some info occurred on the execution process. Check the logs', 'info', 'app.php', '-');
+    }
 }
 
 if ($melhoria) {
@@ -103,9 +121,11 @@ if ($melhoria) {
     if ($ret) {
         echo ('->Actual branch: ' . $ret . "\n");
         logMsg("->Actual branch:$ret", 'info', 'app.php', '-');
-    } else
-        logMsg('->Some error occurred on the execution process. Check the logs', 'error', 'app.php', '-');
+    } else {
+        echo Console::yellow('Some info occurred on the execution process. Check the logs', 'reverse') . "\n";
+        logMsg('->Some info occurred on the execution process. Check the logs', 'info', 'app.php', '-');
+    }
 }
 
-echo ('->Ending application<-' . "\n");
+Console::log('Ending application', 'green');
 logMsg('->Ending application ', 'info', 'app.php', '-');
