@@ -55,6 +55,9 @@ function logMsg($msg, $level = 'info', $fileSource = '', $method = '', $file = '
         $dblog->pushHandler($streamErro);
 
         $logmsg = sprintf("[%s] [%s]: %s", $fileSource, $method, $msg);
+        $logmsgconsole = sprintf("[%s]", $msg, null, null);
+
+        echo ("[$date INFO] $logmsgconsole" . "\n");
 
         switch ($level) {
             case 'info':

@@ -17,7 +17,6 @@ $eng_bug = new Bugfix();
 $eng_hotfix = new Hotfix();
 $eng_feature = new Feature();
 
-Console::log('Executing application', 'green');
 logMsg('->Executing application ', 'info', 'fusionlab.php', '-');
 
 /* FIXME: quando a aplicação é executada, acessamos o diretorio do 
@@ -42,7 +41,6 @@ for ($i = 1; $i < $argc; $i++) {
                 $branch = 'master';
             }
         } else {
-            echo Console::yellow('The eng number cannot be null', 'reverse') . "\n";
             logMsg('->The eng number cannot be null', 'info', 'fusionlab.php', '-');
             wellCome();
             return false;
@@ -56,7 +54,6 @@ for ($i = 1; $i < $argc; $i++) {
                 $branch = 'master';
             }
         } else {
-            echo Console::yellow('The eng number cannot be null', 'reverse') . "\n";
             logMsg('->The eng number cannot be null', 'info', 'fusionlab.php', '-');
             wellCome();
             return false;
@@ -70,13 +67,11 @@ for ($i = 1; $i < $argc; $i++) {
                 $branch = 'master';
             }
         } else {
-            echo Console::yellow('The eng number cannot be null', 'reverse') . "\n";
             logMsg('->The eng number cannot be null', 'info', 'fusionlab.php', '-');
             wellCome();
             return false;
         }
     } else {
-        echo Console::yellow('Invalid parameter', 'reverse') . "\n";
         logMsg('->Invalid parameter', 'info', 'fusionlab.php', '-');
         wellCome();
         return false;
@@ -86,10 +81,8 @@ for ($i = 1; $i < $argc; $i++) {
 if ($bugfix) {
     $ret = $eng_bug->engBugfix($branch, $eng_id);
     if ($ret) {
-        echo ('->Actual branch: ' . $ret . "\n");
         logMsg("->Actual branch:$ret", 'info', 'fusionlab.php', '-');
     } else {
-        echo Console::yellow('Some info occurred on the execution process. Check the logs', 'reverse') . "\n";
         logMsg('->Some info occurred on the execution process. Check the logs', 'info', 'fusionlab.php', '-');
     }
 }
@@ -97,10 +90,8 @@ if ($bugfix) {
 if ($hotfix) {
     $ret = $eng_hotfix->engHotfix($branch, $eng_id);
     if ($ret) {
-        echo ('->Actual branch: ' . $ret . "\n");
         logMsg("->Actual branch:$ret", 'info', 'fusionlab.php', '-');
     } else {
-        echo Console::yellow('Some info occurred on the execution process. Check the logs', 'reverse') . "\n";
         logMsg('->Some info occurred on the execution process. Check the logs', 'info', 'fusionlab.php', '-');
     }
 }
@@ -108,13 +99,10 @@ if ($hotfix) {
 if ($feature) {
     $ret = $eng_feature->engFeature($branch, $eng_id);
     if ($ret) {
-        echo ('->Actual branch: ' . $ret . "\n");
         logMsg("->Actual branch:$ret", 'info', 'fusionlab.php', '-');
     } else {
-        echo Console::yellow('Some info occurred on the execution process. Check the logs', 'reverse') . "\n";
         logMsg('->Some info occurred on the execution process. Check the logs', 'info', 'fusionlab.php', '-');
     }
 }
 
-Console::log('Ending application', 'green');
 logMsg('->Ending application ', 'info', 'fusionlab.php', '-');
