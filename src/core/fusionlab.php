@@ -1,6 +1,7 @@
 <?php
 
 require_once(__DIR__ . '/../utils/utils.php');
+require_once(__DIR__ . '/../utils/logger.php');
 require_once(__DIR__ . '/../utils/console.php');
 require_once(__DIR__ . '/../controller/FlowController.php');
 
@@ -12,12 +13,11 @@ $flow = new Flow();
 
 logMsg('->Executing application ', 'info', 'fusionlab.php', '-');
 
-/* FIXME: quando a aplicação é executada, acessamos o diretorio do 
-repositorio externamente e nao neste mesmo terminal. Verificar a 
-melhor forma de fazer isso. */
+//FIXME: implementar um metodo de deploy e tirar o do docker
+//FIXME: verificar o metodo de busca das releases
 
 for ($i = 0; $i < $argc; $i++) {
-    if ($argc == 1) {
+    if ($argc <= 2) {
         $modules = true;
         wellCome();
         logMsg('->Showing available modules', 'info', 'fusionlab.php', '-');
@@ -26,12 +26,15 @@ for ($i = 0; $i < $argc; $i++) {
 }
 
 for ($i = 1; $i < $argc; $i++) {
-    if (empty($argv[4])) $branch = 'master';
-    if (!empty($argv[3])) {
+    $eng_type = $argv[2];
+
+    empty($argv[4]) ? $branch = 'master' : $branch = $argv[4];
+
+    if (!empty($argv[3]) && is_numeric($argv[3])) {
         $eng_id = preg_replace("/[^0-9]/", "", $argv[3]);
     } else {
         wellCome();
-        logMsg('->The eng number cannot be null', 'info', 'fusionlab.php', '-');
+        logMsg('->The eng number cannot be null and cannot contain letters', 'info', 'fusionlab.php', '-');
         return false;
     }
 
@@ -41,9 +44,9 @@ for ($i = 1; $i < $argc; $i++) {
         'feature' => $feature = false
     );
 
-    if (array_key_exists(strtolower($argv[2]), $operations)) {
+    if (array_key_exists(strtolower($eng_type), $operations)) {
         $git = true;
-        $operations["$argv[2]"] = true;
+        $operations["$eng_type"] = true;
     } else {
         logMsg('->Invalid parameter', 'info', 'fusionlab.php', '-');
         wellCome();
@@ -51,59 +54,11 @@ for ($i = 1; $i < $argc; $i++) {
     }
 }
 
-//FIXME: atribuir nomes as variaveis com arg para melhor identificar
-// for ($i = 1; $i < $argc; $i++) {
-//     if (strtolower($argv[2]) == 'bugfix') {
-//         $bugfix = true;
-//         $git = true;
-//         if (!empty($argv[3])) {
-//             $eng_id = preg_replace("/[^0-9]/", "", $argv[3]);
-//             if (empty($argv[4])) {
-//                 $branch = 'master';
-//             }
-//         } else {
-//             logMsg('->The eng number cannot be null', 'info', 'fusionlab.php', '-');
-//             wellCome();
-//             return false;
-//         }
-//     } else
-//     if (strtolower($argv[2]) == 'hotfix') {
-//         $hotfix = true;
-//         if (!empty($argv[3])) {
-//             $eng_id = preg_replace("/[^0-9]/", "", $argv[3]);
-//             if (empty($argv[4])) {
-//                 $branch = 'master';
-//             }
-//         } else {
-//             logMsg('->The eng number cannot be null', 'info', 'fusionlab.php', '-');
-//             wellCome();
-//             return false;
-//         }
-//     } else 
-//     if (strtolower($argv[2]) == 'feature') {
-//         $feature = true;
-//         if (!empty($argv[3])) {
-//             $eng_id = preg_replace("/[^0-9]/", "", $argv[3]);
-//             if (empty($argv[4])) {
-//                 $branch = 'master';
-//             }
-//         } else {
-//             logMsg('->The eng number cannot be null', 'info', 'fusionlab.php', '-');
-//             wellCome();
-//             return false;
-//         }
-//     } else {
-//         logMsg('->Invalid parameter', 'info', 'fusionlab.php', '-');
-//         wellCome();
-//         return false;
-//     }
-// }
-
 //FIXME:
 //verificar diretorio atual e diretorio criado
 //como serao diferentes, perguntar ao usuario se ele deseja ser redirecionado
 //deseja entrar no diretorio da branch criada?
-if ($operations["$argv[2]"]) {
+if ($operations["$eng_type"]) {
     $arr_key =  key($operations);
     $ret = $flow->gitBranchOp($arr_key, $branch, $eng_id);
     if ($ret) {
@@ -112,23 +67,5 @@ if ($operations["$argv[2]"]) {
         logMsg('->Some info occurred on the execution process. Check the logs', 'info', 'fusionlab.php', '-');
     }
 }
-
-// if ($hotfix) {
-//     $ret = $eng_hotfix->engHotfix($branch, $eng_id);
-//     if ($ret) {
-//         logMsg("->Actual branch:$ret", 'info', 'fusionlab.php', '-');
-//     } else {
-//         logMsg('->Some info occurred on the execution process. Check the logs', 'info', 'fusionlab.php', '-');
-//     }
-// }
-
-// if ($feature) {
-//     $ret = $eng_feature->engFeature($branch, $eng_id);
-//     if ($ret) {
-//         logMsg("->Actual branch:$ret", 'info', 'fusionlab.php', '-');
-//     } else {
-//         logMsg('->Some info occurred on the execution process. Check the logs', 'info', 'fusionlab.php', '-');
-//     }
-// }
 
 logMsg('->Ending application', 'info', 'fusionlab.php', '-');
