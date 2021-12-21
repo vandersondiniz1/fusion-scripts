@@ -14,7 +14,6 @@ $flow = new Flow();
 logMsg('->Executing application ', 'info', 'fusionlab.php', '-');
 
 //FIXME: implementar um metodo de deploy e tirar o do docker
-//FIXME: verificar o metodo de busca das releases
 
 for ($i = 0; $i < $argc; $i++) {
     if ($argc <= 2) {
@@ -59,8 +58,15 @@ for ($i = 1; $i < $argc; $i++) {
 //como serao diferentes, perguntar ao usuario se ele deseja ser redirecionado
 //deseja entrar no diretorio da branch criada?
 if ($operations["$eng_type"]) {
-    $arr_key =  key($operations);
-    $ret = $flow->gitBranchOp($arr_key, $branch, $eng_id);
+    $op =  key($operations);
+
+    $branch_op = array(
+        'op' => $op,
+        'branch' => $branch,
+        'eng_id' => $eng_id
+    );
+
+    $ret = $flow->gitBranchOp($branch_op);
     if ($ret) {
         logMsg("->Actual branch:$ret", 'info', 'fusionlab.php', '-');
     } else {
