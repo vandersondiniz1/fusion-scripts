@@ -9,7 +9,8 @@ date_default_timezone_set('America/Sao_Paulo');
 
 $msg = true;
 $branch = null;
-$flow = new Flow();
+$flow_controller = new Flow();
+$git_controller = new GitController();
 
 logMsg('->Executing application ', 'info', 'fusionlab.php', '-');
 
@@ -26,7 +27,7 @@ for ($i = 0; $i < $argc; $i++) {
 
 for ($i = 1; $i < $argc; $i++) {
     $eng_type = $argv[2];
-
+    $git = true;
     empty($argv[4]) ? $branch = 'master' : $branch = $argv[4];
 
     if (!empty($argv[3]) && is_numeric($argv[3])) {
@@ -40,7 +41,7 @@ for ($i = 1; $i < $argc; $i++) {
     $operations = array(
         'bugfix' => $bugfix = false,
         'hotfix' => $hotfix = false,
-        'feature' => $feature = false
+        'feature' => $feature = false,
     );
 
     if (array_key_exists(strtolower($eng_type), $operations)) {
@@ -53,10 +54,6 @@ for ($i = 1; $i < $argc; $i++) {
     }
 }
 
-//FIXME:
-//verificar diretorio atual e diretorio criado
-//como serao diferentes, perguntar ao usuario se ele deseja ser redirecionado
-//deseja entrar no diretorio da branch criada?
 if ($operations["$eng_type"]) {
     $op =  key($operations);
 
@@ -66,9 +63,10 @@ if ($operations["$eng_type"]) {
         'eng_id' => $eng_id
     );
 
-    $ret = $flow->gitBranchOp($branch_op);
+    $ret = $flow_controller->gitBranchOp($branch_op);
     if ($ret) {
         logMsg("->Actual branch:$ret", 'info', 'fusionlab.php', '-');
+        // $ret = $git_controller->gitBranchDirectory();
     } else {
         logMsg('->Some info occurred on the execution process. Check the logs', 'info', 'fusionlab.php', '-');
     }

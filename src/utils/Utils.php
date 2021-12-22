@@ -18,6 +18,20 @@ function getEnvironment($envKey = null)
     }
 }
 
+function branchPatterName($pBranch)
+{
+    define("STANDARD_BRANCHS", ['master', 'develop', 'pre-prod', 'staging', 'sandbox']);
+
+    if (in_array($pBranch, STANDARD_BRANCHS)) {
+        $data_return = array(
+            'response' => 'failure',
+            'return'   => '' 
+        );
+    } else {
+        //continue
+    }
+}
+
 function wellCome()
 {
     global $modules;

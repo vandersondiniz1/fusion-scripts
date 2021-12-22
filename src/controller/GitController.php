@@ -7,10 +7,28 @@ require_once(__DIR__ . '/../utils/logger.php');
 class GitController
 {
     public $path;
-
+    
     function __construct()
     {
         $this->path = getEnvironment("REPOSITORY_LOCATION");
+    }
+
+    function gitExistsRepository($pPath)
+    {
+        logMsg("->Checking if the repository '$pPath' exists", 'info', 'GitController.php', '-');
+        exec("cd $this->path && ls .git", $output, $ret);
+        if ($ret == 0) {
+            $data_return = array(
+                'response' => 'success'
+            );
+        } else {
+            !empty($output[0]) ? $err = $output[0] : $err = $pPath;
+            $data_return = array(
+                'response' => 'failure',
+                'error'      => $err
+            );
+        }
+        return $data_return;
     }
 
     function gitExistsBranch($pBranch)
@@ -26,8 +44,18 @@ class GitController
     {
         logMsg("->git checkout '$pBranch'", 'info', 'FlowController.php', '-');
         exec("cd $this->path && git checkout $pBranch", $output, $ret);
-        if ($ret == 0) return true;
-        else return false;
+        if ($ret == 0) {
+            $data_return = array(
+                'response' => 'success'
+            );
+        } else {
+            $output[0] ? $err = $output[0] : 'There was no return message';
+            $data_return = array(
+                'response' => 'failure',
+                'error'      => $err
+            );
+        }
+        return $data_return;
     }
 
     function gitLastestRelease($pBranchOp)
@@ -41,6 +69,7 @@ class GitController
         if ($ret == 0) {
             $release = explode('remotes/origin/', $output[0]);
             $limit = 2; //removendo dois espacos
+            if (empty($release[1])) $release[1] = $release[0];
             $last_release = preg_replace('/\s+/', '', $release[1], $limit);
             logMsg("->Last Release encountered:$last_release", 'info', 'FlowController.php', '-');
         } else {
@@ -81,10 +110,9 @@ class GitController
 
     function gitAlertMessage()
     {
-        logMsg("->Are you sure you want to do this?  Type 'y' to continue or 'n' to abort", 'info', 'FlowController.php', '-');
-        $handle = fopen("php://stdin", "r");
-        $line = fgets(strtolower($handle));
-        if (trim($line) != 'y') {
+        logMsg("->Are you sure you want to do this?", 'info', 'FlowController.php', '-');
+        $line = readline("Type 'y' to continue or 'n' to abort: ");
+        if (trim($line) == 'y') {
             logMsg("->Continuing", 'info', 'FlowController.php', '-');
             return true;
         } else {
@@ -100,6 +128,27 @@ class GitController
         exec("cd $this->path && git checkout $pBranch", $output, $return_var);
         logMsg("->git branch -D", 'info', 'FlowController.php', '-');
         exec("git branch -D $pBranchName", $output, $return_var);
+    }
+
+    function gitBranchDirectory()
+    {
+        exec("pwd", $output, $ret);
+        if ($output[0]) $current_dir = $output[0];
+
+        if ($current_dir != $this->path) {
+            logMsg("->You are not currently in the branch directory. Would you like to enter?", 'info', 'FlowController.php', '-');
+            $line = readline("Type 'y' to continue or 'n' to abort: ");
+            if (trim($line) == 'y') {
+                exec("cd $this->path", $output, $ret);
+                exec("pwd", $output, $ret);
+                $output[0] ? $current_dir = $output[0] : $current_dir;
+            } else {
+                exec("pwd", $output, $ret);
+                $output[0] ? $current_dir = $output[0] : $current_dir;
+            }
+        }
+
+        return $current_dir;
     }
 
     function gitPushChanges($pBranch, $pBranchName)

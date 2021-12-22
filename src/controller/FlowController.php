@@ -23,17 +23,23 @@ class Flow
         $pOperation = $pBranchOp['op'];
         $pEngId = $pBranchOp['eng_id'];
 
+        $ret = $git->gitExistsRepository($this->path);
+        if ($ret['response'] == 'failure') $error->gitRepositoryNotExistsError($ret['error']);
+
         $ret = $git->gitExistsBranch($pBranch);
         if ($ret) {
-            $git->gitCheckoutBranch($pBranch);
+            $ret = $git->gitCheckoutBranch($pBranch);
+            if ($ret['response'] == 'failure') $error->gitGenericError($ret['error']);
             $git->gitUpdateBranch($pBranch);
-        } else $error->gitBranchNotExistsError($pBranch);
+        } else
+            $error->gitBranchNotExistsError($pBranch);
 
         logMsg("->Getting the latest release", 'info', 'FlowController.php', '-');
         $ret = $git->gitLastestRelease($pBranchOp);
         if ($ret) {
             $last_release = $ret;
-            $git->gitCheckoutBranch($last_release);
+            $ret = $git->gitCheckoutBranch($last_release);
+            if ($ret['response'] == 'failure') $error->gitGenericError($ret['error']);
         } else $error->gitBranchNotExistsError($pBranch);
 
         $ret = $git->gitExistsBranch("$pOperation/ENG-B-I$pEngId");
