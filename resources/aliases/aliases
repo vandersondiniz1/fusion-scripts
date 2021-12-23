@@ -1,0 +1,15 @@
+alias clone='git clone'
+alias checkout='git checkout'
+alias feature-m='git checkout -b feature/ENG-M-I'
+alias feature-b='git checkout -b feature/ENG-B-I'
+alias push='git push origin'
+
+alias fusionlab_git='php fusionlab.php git'
+alias fusionlab_git_bugfix='php fusionlab.php git bugfix'
+alias fusionlab_git_hotfix='php fusionlab.php git hotfix'
+alias fusionlab_git_feature='php fusionlab.php git feature'
+
+alias fusionlab_git_commit='php fusionlab.php git commit'
+alias fusionlab_git_push='php fusionlab.php git push origin'
+
+alias fusionlab_aws='faz alguma coisa'

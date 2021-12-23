@@ -71,6 +71,7 @@ function wellCome()
         echo 'fusionlab_git_bugfix  [eng_id] [branch_name - optional]'  . chr(10) . chr(13);
         echo 'fusionlab_git_hotfix  [eng_id] [branch_name - optional]'  . chr(10) . chr(13);
         echo 'fusionlab_git_feature [eng_id] [branch_name - optional]'  . chr(10) . chr(13);
+        echo 'fusionlab_git_push    [branch_name - required]'           . chr(10) . chr(13);
         echo '========================================================' . chr(10) . chr(13);
         echo "\n";
     }

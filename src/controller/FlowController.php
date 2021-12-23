@@ -15,7 +15,7 @@ class Flow
         $this->path = getEnvironment("REPOSITORY_LOCATION");
     }
 
-    function gitBranchOp($pBranchOp)
+    function gitBranchOperation($pBranchOp)
     {
         $git = new GitController();
         $error = new Err();
@@ -52,4 +52,10 @@ class Flow
 
         return $ret;
     }
+
+    function gitPushOperation(){
+
+    }
+
+    
 }
