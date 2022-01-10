@@ -53,9 +53,46 @@ class Flow
         return $ret;
     }
 
-    function gitPushOperation(){
+    function gitCommitOperation($pBranchOp)
+    {
+        $git = new GitController();
+        $error = new Err();
+        $pBranch = $pBranchOp['branch'];
 
+        $ret = $git->gitExistsRepository($this->path);
+        if ($ret['response'] == 'failure') $error->gitRepositoryNotExistsError($ret['error']);
+
+        $ret = $git->gitExistsBranch($pBranch);
+        if ($ret) {
+            $ret = $git->gitCheckoutBranch($pBranch);
+            if ($ret['response'] == 'failure') $error->gitGenericError($ret['error']);
+            $ret = $git->gitCommitChanges($pBranch);
+            if ($ret['response'] == 'failure') $error->gitGenericError($ret['error']);
+        } else
+            $error->gitBranchNotExistsError($pBranch);
+
+        return $ret;
     }
 
-    
+    //FIXME: continuar daqui
+    function gitPushOperation($pBranchOp)
+    {
+        $git = new GitController();
+        $error = new Err();
+        $pBranch = $pBranchOp['branch'];
+
+        $ret = $git->gitExistsRepository($this->path);
+        if ($ret['response'] == 'failure') $error->gitRepositoryNotExistsError($ret['error']);
+
+        $ret = $git->gitExistsBranch($pBranch);
+        if ($ret) {
+            $ret = $git->gitCheckoutBranch($pBranch);
+            if ($ret['response'] == 'failure') $error->gitGenericError($ret['error']);
+            $ret = $git->gitCommitChanges($pBranch);
+            if ($ret['response'] == 'failure') $error->gitGenericError($ret['error']);
+        } else
+            $error->gitBranchNotExistsError($pBranch);
+
+        return $ret;
+    }
 }

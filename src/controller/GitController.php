@@ -7,7 +7,7 @@ require_once(__DIR__ . '/../utils/logger.php');
 class GitController
 {
     public $path;
-    
+
     function __construct()
     {
         $this->path = getEnvironment("REPOSITORY_LOCATION");
@@ -149,6 +149,25 @@ class GitController
         }
 
         return $current_dir;
+    }
+
+    function gitCommitChanges($pBranchOp)
+    {
+        exec("cd $this->path && git add . ", $output, $ret);
+        exec("cd $this->path && git commit -m '$pBranchOp' ", $output, $ret);//FIXME: qual deve ser a mensagem?
+
+        if ($ret == 0 || !empty($output[1] == 'nothing to commit, working tree clean')) {
+            $data_return = array(
+                'response' => 'success'
+            );
+        } else {
+            !empty($output[0]) ? $err = $output[0] : $err = $this->path;
+            $data_return = array(
+                'response' => 'failure',
+                'error'      => $err
+            );
+        }
+        return $data_return;
     }
 
     function gitPushChanges($pBranch, $pBranchName)
